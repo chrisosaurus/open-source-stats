@@ -8,9 +8,11 @@ currently we need to track:
 
  * projects
  * users
- * commits per user per project
- * commits per user
- * commits per project
+ * commits per user per project (over time)
+ * commits per user (over time)
+ * commits per project (over time)
+ * contributors per project (over time)
+ * source code stats - lines of code, comments, blanks (over time)
 
 we will have to make sure to be able to correctly deal with history rewriting,
 so everything should be tied to a git hash
@@ -34,6 +36,14 @@ Schema
         time : datetime with tz
         hash : string (git hash)
         commit_count : integer
+
+    project_source_stats:
+        link to project - need to pick project primary key
+        time : datetime with tz
+        hash : string (git hash)
+        lines of code : integer
+        lines of comments : integer
+        blank lines : integer
 
     user:
         unique id goes here
