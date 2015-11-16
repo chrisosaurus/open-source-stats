@@ -41,21 +41,6 @@ def update_project(conn, project_id, repo_url, name, branch, last_updated, last_
     # save hash to db along with last_updated
     conn.execute("UPDATE project set last_updated=CURRENT_TIMESTAMP, last_hash=? where id=?", (hash, project_id))
 
-# delete everything except for the current hash
-# and it's immediate 4 ancestors
-def prune_project_stats(conn, project_id, current_hash):
-    pass
-
-# delete everything except for the current hash
-# and it's immediate 4 ancestors
-def prune_project_user_stats(conn, project_id, user_id, current_hash):
-    pass
-
-# delete everything except for the current hash
-# and it's immediate 4 ancestors
-def prune_user_stats(conn, user_id, current_hash):
-    pass
-
 # calculate project and project user stats
 def get_project_stats(conn, repo, project_id):
     # seen is a set holding all the commits we already have stats for
@@ -171,8 +156,6 @@ def record_project_stats(conn, project_id, stats):
                                                       (                   project_id, monstr, hash, parent_hash, total_commits, commits_in_period))
         pass
 
-    prune_project_stats(conn, project_id, newest_hash)
-
 def record_project_user_stats(conn, project_id, stats):
     pass
 
@@ -223,8 +206,6 @@ def record_project_user_stats(conn, project_id, stats):
         conn.execute('''insert into project_user_stats (project_id, user_id, generated,         hash,  parent_hash,   total_commits, commits_in_period)
                                                 values (?,          ?,       CURRENT_TIMESTAMP, ?,     ?,             ?,                  ?)''',
                                                        (project_id, user_id,                    hash,  parent_hash,   total_commits, commits_in_period))
-
-        prune_project_user_stats(conn, project_id, user_id, stats["hash"])
 
 # generate statistics for a project
 def gen_project_stats(conn, project_id, repo_url, name, branch, last_updated, last_hash):
