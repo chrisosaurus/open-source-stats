@@ -119,6 +119,8 @@ def get_project_stats(conn, repo, project_id):
         if commit_hash in seen:
             month["final_hash"] = commit_hash
             month["commits_in_period"] += seen[commit_hash]["commits_in_period"]
+            # FIXME this total commit logic doesn't work
+            # as for 99.99% of the time there is nothing immediately below us
             month["total_commits"] = month["commits_in_period"] + seen[commit_hash]["total_commits"]
             break;
 
