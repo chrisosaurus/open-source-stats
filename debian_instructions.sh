@@ -17,3 +17,8 @@ cd ..
 pip3 install cffi
 pip3 install pygit2
 
+# you may have to add this to your ~/.bashrc
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+
+echo "You may have to add a line to your ~/.bashrc, see the bottom of this script for that line"
+
