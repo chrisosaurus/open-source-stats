@@ -11,8 +11,22 @@ def timestamp_to_monstr(timestamp):
     date = datetime.date.fromtimestamp(timestamp)
     year = date.year
     month = date.month
-    monstr = "%s-%s" %(year, month)
+    monstr = "%.4d-%.2d" %(year, month)
     return monstr
+
+def prev_month(monstr):
+    (year, month) = monstr.split("-")
+    year = int(year)
+    month = int(month)
+
+    month -= 1
+
+    if month <= 0:
+        month = 12
+        year -= 1
+
+    newmonstr = "%.4d-%.2d" %(year, month)
+    return newmonstr
 
 # update a project's git checkout
 def update_project(conn, project_id, repo_url, name, branch, last_updated, last_hash):
@@ -53,9 +67,9 @@ def get_project_stats(conn, repo, project_id):
         monstr = row[3]
 
         seen[hash] = {
-                "total" : total_commits,
+                "total" :     total_commits,
                 "in period" : commits_in_peroid,
-                "monstr" : monstr
+                "monstr" :    monstr
                      }
 
     master = repo.revparse_single("origin/master")
@@ -74,8 +88,6 @@ def get_project_stats(conn, repo, project_id):
 
     # our current hash
     master_hash = str(master.oid)
-    # the has from the previous iteration, used when months changes
-    previous_hash = ""
     # tracking our final hash
     final_hash = ""
     for commit in walker:
@@ -90,15 +102,13 @@ def get_project_stats(conn, repo, project_id):
         if monstr not in stats:
             stats[monstr] = {
                 "hash": commit_hash, # we want a month's hash to be the 'first' hash we see for that month
-                "parent_hash": previous_hash,
+                "parent_hash": "",
                 "commits_in_period" : 0,
                 "total_commits": 0,
                 "commits_in_period_per_user": {},
                             }
 
         month = stats[monstr]
-
-        previous_hash = commit_hash
 
         # stop when we find somewhere we have been before
         if commit_hash in seen:
@@ -118,6 +128,32 @@ def get_project_stats(conn, repo, project_id):
         month["commits_in_period_per_user"][author_email] += 1
         # NOTE: commits per user do NOT include previous information
         # this is taken care of later
+
+    # once we have finished collecting all data we now want to go through and set the previous_hash values
+    # we also want to make sure that the 'total commits' is correctly set
+    parent_hash = None
+    total_commits = 0
+    for monstr in sorted(stats.keys()):
+        month = stats[monstr]
+
+        if parent_hash is None:
+            prev_monstr = prev_month(monstr)
+            row = conn.execute('''select hash, total_commits from project_stats where project_id=? and month=?''', (project_id, prev_monstr));
+            row = row.fetchone()
+            if row is not None:
+                # find hash
+                parent_hash = row[0]
+
+                # set total commits
+                total_commits = row[1]
+            else:
+                parent_hash = ""
+
+
+        total_commits += month["commits_in_period"]
+        month["total_commits"] = total_commits
+        month["parent_hash"] = parent_hash
+        parent_hash = month["hash"]
 
     return stats
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 DB=oos.sqlite
 FILE=schema.sql
