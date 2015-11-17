@@ -14,5 +14,6 @@ make
 make install
 cd ..
 
+pip3 install cffi
 pip3 install pygit2
 
