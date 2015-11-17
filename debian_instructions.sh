@@ -12,6 +12,7 @@ cd libgit2-0.23.2/
 cmake .
 make
 make install
+cd ..
 
 pip3 install pygit2
 
