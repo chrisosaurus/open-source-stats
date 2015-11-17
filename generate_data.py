@@ -75,7 +75,7 @@ def output_data(data, output_path):
     output.append( '''var dataset_to = "%s";\n''' %(dto) )
     output.append( '''var dataset = [\n''' )
     for i in range(len(contents)):
-        string = '''%d''' %(contents[i])
+        string = '''    %d''' %(contents[i])
         if i != (len(contents)-1):
             string += ","
         string += "\n"
