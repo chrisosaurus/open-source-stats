@@ -56,7 +56,7 @@ it then generates the statistics, prints them out, and then opens the testing si
 
 which shows the following graph:
 
-[ponyc commit graph 2015-11-18](https://raw.githubusercontent.com/mkfifo/open-source-stats/master/resources/ponyc_commit_graph_2015-11-18.png)
+![ponyc commit graph 2015-11-18](https://raw.githubusercontent.com/mkfifo/open-source-stats/master/resources/ponyc_commit_graph_2015-11-18.png)
 
 deps
 ----
