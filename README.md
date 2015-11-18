@@ -165,7 +165,7 @@ which allows the following 3 rgb formats:
         "1, 87, 155",
     ]
 
-    "r g b"
+    #"r g b"
     colours = [
         "225 245 254",
         "179 229 252",
