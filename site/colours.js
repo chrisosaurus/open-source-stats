@@ -37,8 +37,22 @@ var colour_range = [    /* 0 =  0 ..   9 % */
     [  1, 87,155,],
 ];
 
+
 // default colour should never actually be used
 var colour_default = [0, 0, 0];
 // ongoing colour is for the current month, to show that the number is not yet final
 var colour_ongoing = [138, 43, 226];
+
+function get_colour(percent){
+    var index = Math.floor(colour_range.length * percent);
+    index = Math.max(index, 0);
+    index = Math.min(index, (colour_range.length-1));
+
+    if( index in colour_range ){
+        return colour_range[index];
+    }
+
+    return colour_default;
+}
+
 

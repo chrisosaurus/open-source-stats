@@ -22,18 +22,6 @@ var xpadding = 40;
 /* extra room added to y for axis */
 var ypadding = 40 + title_height + title_padding;
 
-function get_colour(percent){
-    var index = Math.floor(colour_range.length * percent);
-    index = Math.max(index, 0);
-    index = Math.min(index, (colour_range.length-1));
-
-    if( index in colour_range ){
-        return colour_range[index];
-    }
-
-    return colour_default;
-}
-
 console.log(datasets);
 
 // draw dataset graphs
