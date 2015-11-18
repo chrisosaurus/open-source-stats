@@ -32,15 +32,36 @@ var ypadding = 40 + title_height + title_padding;
  *     colour_range[9] is for 90 ..100 %
  */
 var colour_range = [
+    /* 0 =  0 ..   9 % */
     [  0, 191, 255],
+
+    /* 1 = 10 ..  19 % */
     [  0, 154, 205],
+
+    /* 2 = 20 ..  29 % */
     [ 30, 144, 255],
+
+    /* 3 = 30 ..  39 % */
     [ 24, 116, 205],
-    [ 16,  78, 139],
-    [  0,   0, 255],
+
+    /* 4 = 40 ..  49 % */
     [ 72, 118, 255],
+
+    /* 5 = 50 ..  59 % */
     [ 58,  95, 205],
+
+    /* 6 = 60 ..  69 % */
+    [ 16,  78, 139],
+
+    /* 7 = 70 ..  79 % */
     [ 39,  64, 139],
+
+    /* 8 = 80 ..  89 % */
+    // FIXME this is my favourite colour
+    // so I want things around this
+    [  0,   0, 255],
+
+    /* 9 = 90 .. 100 % */
     [ 25,  25, 112],
 ];
 // default colour should never actually be used
@@ -49,7 +70,7 @@ var colour_default = [0, 0, 0];
 var colour_ongoing = [138, 43, 226];
 
 function get_colour(percent){
-    var index = Math.round(colour_range.length * percent);
+    var index = Math.floor(colour_range.length * percent);
     index = Math.max(index, 0);
     index = Math.min(index, (colour_range.length-1));
 
