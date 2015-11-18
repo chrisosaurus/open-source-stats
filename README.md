@@ -8,24 +8,33 @@ This is an early work in progress.
 demo
 ----
 
-to see a running demo you can invoke `make demo`
+`make view` will open a browser with the current demo
 
-    [chris@heimdall open-source-stats]$ make demo
+![demo commit graph](https://raw.githubusercontent.com/mkfifo/open-source-stats/master/resources/oos-demo.png )
+
+
+full demo
+----
+
+If you want to see a full length demo including git cloning, data generation, and display you can run `make demo`
+
+    chris@Ox1b open-source-stats(master)-> make demo
+    ./scripts/demo.sh
     db 'oos.sqlite' already exists, deleting
     creating database 'oos.sqlite'
     success
     name is 'github.com_CausalityLtd_ponyc.git'
     fetching to 'repos/github.com_CausalityLtd_ponyc.git'
+    name is 'github.com_rust-lang_rust.git'
+    fetching to 'repos/github.com_rust-lang_rust.git'
+    output generated to `site/index.html`, attempting to open in browser
     Created new window in existing browser session.
 
 this will create a new db with a fresh schema, clone/update the testing project (here we use ponyc)
 it then generates the statistics, and then opens the testing site in a browser showing those generated stats.
 
-which shows the following graph:
-
-![demo commit graph](https://raw.githubusercontent.com/mkfifo/open-source-stats/master/resources/oos-demo.png )
-
-you can also just view the above graph from running `make view`
+this will then open your browser of choice showing a page with the colouring graphs along with the graphs for the current
+testing projects.
 
 colouring values
 ----------------
