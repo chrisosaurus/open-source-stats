@@ -27,8 +27,8 @@ which shows the following graph:
 
 you can also just view the above graph from running `make view`
 
-colouring
----------
+colouring values
+----------------
 
 HELP WANTED
 
@@ -90,7 +90,11 @@ in site/graph.js at the top we have
 
 this defines our colour range
 
-if you change these values and then run `make generate` your browser of choice should open to a page showing this graph
+
+colour chart
+------------
+
+if you change the above colouring values and then run `make generate` your browser of choice should open to a page showing this graph
 
 ![colour chart](https://raw.githubusercontent.com/mkfifo/open-source-stats/master/resources/colour_chart.png )
 
