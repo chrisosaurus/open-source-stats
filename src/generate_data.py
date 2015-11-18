@@ -12,10 +12,10 @@ output_path = "site/data.js"
 
 # FIXME temporary colour chart
 colour_chart = {
-                "from": "2015-00",
+                "from": "2015-01",
                 "to": "2015-12",
-                # we have two 9s, one for 90 % and one for 'final value'
-                "contents": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9],
+                # we have two 10s, one for 100 % and one for 'final value'
+                "contents": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10],
                }
 
 
