@@ -18,7 +18,7 @@ var height = 150 + title_height + title_padding;
 /* padding between bars */
 var barpadding = 1;
 /* extra room added to x for axis */
-var xpadding = 30;
+var xpadding = 40;
 /* extra room added to y for axis */
 var ypadding = 40 + title_height + title_padding;
 
