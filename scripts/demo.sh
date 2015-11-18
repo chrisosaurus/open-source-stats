@@ -7,7 +7,7 @@
 DB=oos.sqlite
 FILE=schema.sql
 
-echo "select * from project_stats order by project_id, month asc;" | sqlite3 "$DB"
+#echo "select * from project_stats order by project_id, month asc;" | sqlite3 "$DB"
 
 ./src/generate_data.py
 
