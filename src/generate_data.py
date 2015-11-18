@@ -10,6 +10,15 @@ period = 12
 
 output_path = "site/data.js"
 
+# FIXME temporary colour chart
+colour_chart = {
+                "from": "2015-00",
+                "to": "2015-12",
+                # we have two 9s, one for 90 % and one for 'final value'
+                "contents": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9],
+               }
+
+
 def prev_month(monstr):
     (year, month) = monstr.split("-")
     year = int(year)
@@ -28,6 +37,9 @@ def generate_data(conn, project_ids, period):
     # create an array <period> in length
     # initially populated with all 0s
     data = {}
+
+    # FIXME colour chart
+    data["colour_chart"] = colour_chart
 
     now = datetime.datetime.now()
     year = now.year
@@ -81,7 +93,7 @@ def output_data(data, output_path):
     output = []
     output.append( '''var datasets = [\n''' )
 
-    for project_name in data.keys():
+    for project_name in sorted(data.keys()):
         project_data = data[project_name]
 
         dfrom = project_data["from"]
