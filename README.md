@@ -5,6 +5,11 @@ This is a proof of concept for a website dedicated to presenting statistics on o
 
 This is an early work in progress.
 
+license
+-------
+
+This works is licensed under the GPL version 3
+
 demo
 ----
 
@@ -88,10 +93,5 @@ deps
  * libgit2
  * python cffi
  * pygit2
-
-license
--------
-
-This works is licensed under the GPL version 3
 
 
