@@ -30,39 +30,44 @@ var ypadding = 40 + title_height + title_padding;
  *     ...
  *     colour_range[8] is for 80 .. 89 %
  *     colour_range[9] is for 90 ..100 %
+ *
+ * currently using the light blue palette from
+ *  http://www.google.com/design/spec/style/color.html#color-color-palette
+ *
+ *  FIXME I do really like this blue...
+ *  [  0,   0, 255],
  */
 var colour_range = [
     /* 0 =  0 ..   9 % */
-    [  0, 191, 255],
+    [225, 245, 254],
 
     /* 1 = 10 ..  19 % */
-    [  0, 154, 205],
+    [179, 229, 252],
 
     /* 2 = 20 ..  29 % */
-    [ 30, 144, 255],
+    [129, 212, 250],
 
     /* 3 = 30 ..  39 % */
-    [ 24, 116, 205],
+    [79, 195, 247],
 
     /* 4 = 40 ..  49 % */
-    [ 72, 118, 255],
+    [41, 182, 246],
 
     /* 5 = 50 ..  59 % */
-    [ 58,  95, 205],
+    [3, 169, 244],
 
     /* 6 = 60 ..  69 % */
-    [ 16,  78, 139],
+    [3, 155, 229],
 
     /* 7 = 70 ..  79 % */
-    [ 39,  64, 139],
+    [2, 136, 209],
 
     /* 8 = 80 ..  89 % */
-    // FIXME this is my favourite colour
-    // so I want things around this
-    [  0,   0, 255],
+    [2, 119, 189],
 
     /* 9 = 90 .. 100 % */
-    [ 25,  25, 112],
+    [1, 87, 155],
+
 ];
 // default colour should never actually be used
 var colour_default = [0, 0, 0];

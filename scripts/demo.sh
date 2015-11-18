@@ -13,5 +13,7 @@ FILE=schema.sql
 
 ./src/generate_data.py
 
+echo 'output generated to `site/index.html`, attempting to open in browser';
+
 chromium site/index.html
 
