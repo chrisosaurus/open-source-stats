@@ -38,7 +38,7 @@ def generate_data(conn, project_ids, period):
     data = {}
 
     # FIXME colour chart
-    data["colour_chart"] = colour_chart
+    data["colour chart"] = colour_chart
 
     now = datetime.datetime.now()
     year = now.year
