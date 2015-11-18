@@ -52,7 +52,8 @@ def generate_data(dbname, project_id, period):
 
     for i in range(period):
         if monstr in months:
-            data[-i] = months[monstr]
+            # add from back
+            data[-(i+1)] = months[monstr]
         monstr = prev_month(monstr)
 
     # note this is 'off by one'
