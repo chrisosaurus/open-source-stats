@@ -137,7 +137,25 @@ def rgb_str_to_list(rgbstr):
     parts = rgbstr.split()
     return parts
 
-headers = [
+header = '''
+/* FIXME we need to decide on these colour graduations
+ * the idea is:
+      *     colour_range[0] is for  0 ..  9 %
+ *     colour_range[1] is for 10 .. 19 %
+ *     colour_range[2] is for 20 .. 29 %
+ *     ...
+ *     colour_range[8] is for 80 .. 89 %
+ *     colour_range[9] is for 90 ..100 %
+ *
+ * currently using the light blue palette from
+ *  http://www.google.com/design/spec/style/color.html#color-color-palette
+ *
+ *  FIXME I do really like this blue...
+ *  [  0,   0, 255],
+ */
+'''
+
+comments = [
     "/* 0 =  0 ..   9 % */",
     "/* 1 = 10 ..  19 % */",
     "/* 2 = 20 ..  29 % */",
@@ -150,21 +168,34 @@ headers = [
     "/* 9 = 90 .. 100 % */",
 ]
 
+footer = '''
+// default colour should never actually be used
+var colour_default = [0, 0, 0];
+// ongoing colour is for the current month, to show that the number is not yet final
+var colour_ongoing = [138, 43, 226];
+'''
+
 def pretty_print(output):
     if len(output) != 10:
         print("Error: pretty_print output must be 10 elems")
         exit(1)
 
+    # print header
+    print(header)
+
     # print open
     print("var colour_range = [")
 
     for i in range(0, 10):
-        print("    ", headers[i])
-        print("    ", output[i])
+        print("    ", comments[i])
+        print("    ", output[i], ",")
         print("")
 
     # print close
     print("];\n")
+
+    # print footer
+    print(footer)
 
 
 if __name__ == "__main__":

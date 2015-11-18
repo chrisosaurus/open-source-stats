@@ -24,7 +24,7 @@ generate:
 	./scripts/view.sh
 
 palette:
-	./scripts/gen_colour_palette.py
+	./scripts/gen_colour_palette.py > site/colours.js
 
 .PHONY: all create open view demo generate palette
 
