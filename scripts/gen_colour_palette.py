@@ -23,20 +23,20 @@ import os
 #    01579B
 #
 # a rgb file takes 3 values per line (r, g and then b)
-# these values must be whitespace separated, commas are ignored
+# these values must be whitespace or comma separated
 # leading and trailing whitespace are ignored:
 #
 #     chris@Ox1b open-source-stats(master)-> cat palettes/old-blue.rgb
-#     227, 242, 253
-#     187, 222, 251
-#     144, 202, 249
-#     100, 181, 246
-#      66, 165, 245
-#      33, 150, 243
-#      30, 136, 229
-#      25, 118, 210
-#      21, 101, 192
-#      13,  71, 161
+#     227 242 253
+#     187 222 251
+#     144 202 249
+#     100 181 246
+#      66 165 245
+#      33 150 243
+#      30 136 229
+#      25 118 210
+#      21 101 192
+#      13  71 161
 #
 
 def hex_to_rgb_list(hex):
