@@ -59,83 +59,26 @@ colouring values
 
 HELP WANTED
 
-in site/graph.js at the top we have
+the directory `palettes/` contains a list of possible palettes
 
-    /* FIXME we need to decide on these colour graduations
-     * the idea is:
-     *     colour_range[0] is for  0 ..  9 %
-     *     colour_range[1] is for 10 .. 19 %
-     *     colour_range[2] is for 20 .. 29 %
-     *     ...
-     *     colour_range[8] is for 80 .. 89 %
-     *     colour_range[9] is for 90 ..100 %
-     */
-    var colour_range = [
-        /* 0 =  0 ..   9 % */
-        [225, 245, 254],
+    chris@Ox1b open-source-stats(master)-> ls -1 palettes/
+    google-blue.hex
+    google-light-blue.hex
+    old-blue.rgb
 
-        /* 1 = 10 ..  19 % */
-        [179, 229, 252],
-
-        /* 2 = 20 ..  29 % */
-        [129, 212, 250],
-
-        /* 3 = 30 ..  39 % */
-        [79, 195, 247],
-
-        /* 4 = 40 ..  49 % */
-        [41, 182, 246],
-
-        /* 5 = 50 ..  59 % */
-        [3, 169, 244],
-
-        /* 6 = 60 ..  69 % */
-        [3, 155, 229],
-
-        /* 7 = 70 ..  79 % */
-        [2, 136, 209],
-
-        /* 8 = 80 ..  89 % */
-        [2, 119, 189],
-
-        /* 9 = 90 .. 100 % */
-        [1, 87, 155],
-
-    ];
-
-    // default colour should never actually be used
-    var colour_default = [0, 0, 0];
-    // ongoing colour is for the current month, to show that the number is not yet final
-    var colour_ongoing = [138, 43, 226];
+the default palette is currently `google-light-blue.hex`
 
 
-this defines our colour range
+you can specify which ever palette you want by running
 
-you can generate the data for the colour_range block by looking at the script `scripts/gen_colour_palette.py`
-
-it supports 'hex' and 'rgb' modes
-
-it has the following at the top:
-
-    mode = "hex"
-
-    colours = [
-        "E1F5FE",
-        "B3E5FC",
-        "81D4FA",
-        "4FC3F7",
-        "29B6F6",
-        "03A9F4",
-        "039BE5",
-        "0288D1",
-        "0277BD",
-        "01579B",
-    ]
-
-
-if you modify this and then run `make palette` it will generate a colour palette
+    ./scripts/gen_colour_palette.py palettes/google-blue.hex
 
 you can then view this via `make view`
+
+
+you can always get back to the default via
+
+    make default-palette
 
 deps
 ----

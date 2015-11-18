@@ -1,94 +1,104 @@
 #!/usr/bin/python3
+import sys
+import os
 
-# can set to 'hex' or 'rgb'
-mode = "hex"
+# this script allows the loading of palettes from files
+# when invoked you must specify a palette
+#       google-blue.hex
+#       google-light-blue.hex
+#       old-blue.rgb
+#
+# a hex file must be made up with one rgb hex file per line, like so:
+#
+#    chris@Ox1b open-source-stats(master)-> cat palettes/google-light-blue.hex
+#    E1F5FE
+#    B3E5FC
+#    81D4FA
+#    4FC3F7
+#    29B6F6
+#    03A9F4
+#    039BE5
+#    0288D1
+#    0277BD
+#    01579B
+#
+# a rgb file takes 3 values per line (r, g and then b)
+# these values must be whitespace separated, commas are ignored
+# leading and trailing whitespace are ignored:
+#
+#     chris@Ox1b open-source-stats(master)-> cat palettes/old-blue.rgb
+#     227, 242, 253
+#     187, 222, 251
+#     144, 202, 249
+#     100, 181, 246
+#      66, 165, 245
+#      33, 150, 243
+#      30, 136, 229
+#      25, 118, 210
+#      21, 101, 192
+#      13,  71, 161
+#
 
-# list of input hex or rgb colours
-#
-# in hex mode each entry should be:
-#   "E1F5FE"
-#
-# in rgb mode each should be ANY of
-#   [r, g, b]
-#   "r g b"
-#   "r, g, b,"
-#
-colours = [
-    "E1F5FE",
-    "B3E5FC",
-    "81D4FA",
-    "4FC3F7",
-    "29B6F6",
-    "03A9F4",
-    "039BE5",
-    "0288D1",
-    "0277BD",
-    "01579B",
-]
+def hex_to_rgb_list(hex):
+    r = hex[0:2]
+    g = hex[2:4]
+    b = hex[4:6]
+    return [
+        "%3d" %(int(r,16)),
+        "%3d" %(int(g,16)),
+        "%3d" %(int(b,16))
+    ]
 
-#    mode = "hex"
-#    # "XXXXXX"
-#    colours = [
-#        "E1F5FE",
-#        "B3E5FC",
-#        "81D4FA",
-#        "4FC3F7",
-#        "29B6F6",
-#        "03A9F4",
-#        "039BE5",
-#        "0288D1",
-#        "0277BD",
-#        "01579B",
-#    ]
-#
-# example valid inputs
-#
-#    mode = "rgb"
-#    # [r, g, b]
-#    colours = [
-#        [225, 245, 254],
-#        [179, 229, 252],
-#        [129, 212, 250],
-#        [79, 195, 247],
-#        [41, 182, 246],
-#        [3, 169, 244],
-#        [3, 155, 229],
-#        [2, 136, 209],
-#        [2, 119, 189],
-#        [1, 87, 155],
-#    ]
-#
-#
-#    mode = "rgb"
-#    # "r, g, b"
-#    colours = [
-#        "225, 245, 254",
-#        "179, 229, 252",
-#        "129, 212, 250",
-#        "79, 195, 247",
-#        "41, 182, 246",
-#        "3, 169, 244",
-#        "3, 155, 229",
-#        "2, 136, 209",
-#        "2, 119, 189",
-#        "1, 87, 155",
-#    ]
-#
-#    mode = "rgb"
-#    # "r g b"
-#    colours = [
-#        "225 245 254",
-#        "179 229 252",
-#        "129 212 250",
-#        "79 195 247",
-#        "41 182 246",
-#        "3 169 244",
-#        "3 155 229",
-#        "2 136 209",
-#        "2 119 189",
-#        "1 87 155",
-#    ]
+def rgb_str_to_list(rgbstr):
+    parts = rgbstr.split()
+    out = []
+    for part in parts:
+        part = "%3d" %(int(part))
+        out.append(part)
+        print(part)
+    return out
 
+def parse_palette(path):
+    colours = []
+    if not os.path.exists(path):
+        print("Error: failed to find palette at '" + path + "'")
+        exit(1)
+
+    mode = path[-3:]
+    if mode != 'hex' and mode != 'rgb':
+        print("Error: unsupported palette format '" + mode + "'")
+        exit(1)
+
+    lines = []
+    with open(path, "r") as f:
+        lines = f.readlines()
+
+    if len(lines) != 10:
+        print("Error: palette did not specify exactly 10 colours")
+        exit(1)
+
+    colours = []
+
+    for line in lines:
+        line = line.lstrip(" ")
+        line = line.rstrip("\n")
+        line = line.rstrip(" ")
+        line = line.replace(",", " ")
+        colour = None
+        if mode == "rgb":
+            colour = rgb_str_to_list(line)
+        elif mode == "hex":
+            colour = hex_to_rgb_list(line)
+        else:
+            print("Error: unsupported format")
+            exit(1)
+        colours.append(colour)
+
+    if len(colours) != 10:
+        print("Error: failed to parse 10 colour lines")
+        exit(1)
+
+    return colours
 
 
 # example output:
@@ -125,17 +135,6 @@ colours = [
 #         [1, 87, 155]
 #
 #    ];
-
-
-def hex_to_rgb(hex):
-    r = hex[0:2]
-    g = hex[2:4]
-    b = hex[4:6]
-    return [ int(r,16), int(g,16), int(b,16) ]
-
-def rgb_str_to_list(rgbstr):
-    parts = rgbstr.split()
-    return parts
 
 header = '''
 /* FIXME we need to decide on these colour graduations
@@ -175,60 +174,67 @@ var colour_default = [0, 0, 0];
 var colour_ongoing = [138, 43, 226];
 '''
 
-def pretty_print(output):
+def pretty_print(f, output):
     if len(output) != 10:
         print("Error: pretty_print output must be 10 elems")
         exit(1)
 
+    lines = []
+
     # print header
-    print(header)
+    lines.append(header)
+    lines.append("\n")
 
     # print open
-    print("var colour_range = [")
+    lines.append("var colour_range = [")
 
     for i in range(0, 10):
-        print("    ", comments[i])
-        print("    ", output[i], ",")
-        print("")
+        lines.append("    ")
+        lines.append(comments[i])
+        lines.append("\n")
+        lines.append("    ")
+        lines.append("[")
+        for o in output[i]:
+            o += ","
+            lines.append(o)
+        lines.append("],\n")
 
     # print close
-    print("];\n")
+    lines.append("];\n")
 
     # print footer
-    print(footer)
+    lines.append(footer)
+    lines.append("\n")
+
+    f.writelines(lines)
 
 
 if __name__ == "__main__":
+    args = sys.argv
+    if len(args) < 2:
+        print("Error: must specify palette file")
+        exit(1)
+    if len(args) > 2:
+        print("Error: too many args, only take palette file")
+        exit(1)
+    palette = args[1]
+
+    if not os.path.exists(palette):
+        expanded_palette = os.path.join("palettes", palette)
+        if not os.path.exists(expanded_palette):
+            print("Error: failed to find palette, checked at '" + palette + "' and '" + expanded_palette + "'")
+            print("Please see palettes/ for a list of available palettes")
+            exit(1)
+        palette = expanded_palette
+
+    colours = parse_palette(palette)
+
     if len(colours) != 10:
         print("Error: colour list must have 10 elems")
         exit(1)
 
-    output = []
+    target = "site/colours.js"
+    with open(target, "w") as f:
+        pretty_print(f, colours)
 
-    for c in colours:
-        if mode == 'hex':
-            c = hex_to_rgb(c)
-            if len(c) != 3:
-                print("Error: hex list must have 3 elems")
-                exit(1)
-        elif mode == 'rgb':
-            if type(c) == list:
-                if len(c) != 3:
-                    print("Error: rgb list must have 3 elems")
-                    exit(1)
-                # this is good!
-                pass
-            elif type(c) == str:
-                # must convert to []
-                c = rgb_str_to_list(c)
-            else:
-                print("Unsupported type for rgb")
-                exit(1)
-        else:
-            print("Unsupported mode")
-            exit(1)
-
-        output.append(c)
-
-    pretty_print(output)
 

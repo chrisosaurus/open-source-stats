@@ -23,8 +23,8 @@ generate:
 	./src/generate_data.py
 	./scripts/view.sh
 
-palette:
-	./scripts/gen_colour_palette.py > site/colours.js
+default-palette:
+	./scripts/gen_colour_palette.py palettes/google-light-blue.hex > site/colours.js
 
-.PHONY: all create open view demo generate palette
+.PHONY: all create open view demo generate default-palette
 
