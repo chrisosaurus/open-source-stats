@@ -83,7 +83,7 @@ def generate_data(dbname, project_ids, period):
 
 def output_data(data, output_path):
     output = []
-    output.append( '''var dataset = [\n''' )
+    output.append( '''var datasets = [\n''' )
 
     for project_name in data.keys():
         project_data = data[project_name]
@@ -93,8 +93,8 @@ def output_data(data, output_path):
         contents = project_data["contents"]
 
         output.append( '''    { project: "%s", ''' %(project_name) )
-        output.append( ''' data_from: "%s", ''' %(dfrom) )
-        output.append( ''' data_to: "%s", ''' %(dto) )
+        output.append( ''' date_from: "%s", ''' %(dfrom) )
+        output.append( ''' date_to: "%s", ''' %(dto) )
         output.append( ''' data : [ ''' )
         for i in range(len(contents)):
             output.append( '''%d, ''' %(contents[i]) )
