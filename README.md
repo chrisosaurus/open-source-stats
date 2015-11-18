@@ -36,8 +36,8 @@ it then generates the statistics, and then opens the testing site in a browser s
 this will then open your browser of choice showing a page with the colouring graphs along with the graphs for the current
 testing projects.
 
-colouring values
-----------------
+colour chart
+------------
 
 HELP WANTED
 
@@ -45,6 +45,19 @@ I am not a designer...
 
 I want to make the graph bars colours to show percentages,
 I also would like the right-most bar to be coloured to show it being 'in progress'
+
+if you run `make generate` your browser should open to a page showing
+
+![colour chart](resources/colour_chart.png )
+
+These colours are currently based on the 'light blue' palette from http://www.google.com/design/spec/style/color.html#color-color-palette
+
+the section below `colouring values` includes instructions on how to play with these colours
+
+colouring values
+----------------
+
+HELP WANTED
 
 in site/graph.js at the top we have
 
@@ -206,15 +219,8 @@ which is suitable for placing into `site/graph.js`
 
 you can run this via `make palette`
 
-
-colour chart
-------------
-
-if you change the above colouring values and then run `make generate` your browser of choice should open to a page showing this graph
-
-![colour chart](resources/colour_chart.png )
-
-These colours are currently based on the 'light blue' palette from http://www.google.com/design/spec/style/color.html#color-color-palette
+if you then update `site/graph.js` and run `make generate` you should have the colour chart open
+in your browser
 
 
 deps
