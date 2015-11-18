@@ -40,17 +40,20 @@ for (index in datasets){
     // get max value of data for scaling
     var data_max = Math.max.apply(Math, data);
 
+    // round up to nice number
+    //data_max += 170;
+
     // scale:
     // mapping all values from 0 .. data_max
     // onto 0 .. height
     var scale = d3.scale.linear()
-        .domain([0, data_max])
+        .domain([0, data_max]).nice()
         .range([0, height]);
 
     // yaxis - commit numbers
     var yaxis = d3.svg.axis()
         .scale( d3.scale.linear()
-                .domain([0, data_max])
+                .domain([0, data_max]).nice()
                 .range([height, 0]) )
         .orient("right")
         .ticks(10);
