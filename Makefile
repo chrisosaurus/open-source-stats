@@ -23,5 +23,8 @@ generate:
 	./src/generate_data.py
 	./scripts/view.sh
 
-.PHONY: all create open view demo generate
+palette:
+	./scripts/gen_colour_palette.py
+
+.PHONY: all create open view demo generate palette
 

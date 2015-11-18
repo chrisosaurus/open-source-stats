@@ -98,6 +98,114 @@ in site/graph.js at the top we have
 
 this defines our colour range
 
+you can generate the data for the colour_range block by looking at the script `scripts/gen_colour_palette.py`
+
+it has the following at the top:
+
+    mode = "hex"
+
+    colours = [
+        "E1F5FE",
+        "B3E5FC",
+        "81D4FA",
+        "4FC3F7",
+        "29B6F6",
+        "03A9F4",
+        "039BE5",
+        "0288D1",
+        "0277BD",
+        "01579B",
+    ]
+
+this also supports an rgb mode:
+
+    mode = "rgb"
+
+which allows the following 3 rgb formats:
+
+    # [r, g, b]
+    colours = [
+        [225, 245, 254],
+        [179, 229, 252],
+        [129, 212, 250],
+        [79, 195, 247],
+        [41, 182, 246],
+        [3, 169, 244],
+        [3, 155, 229],
+        [2, 136, 209],
+        [2, 119, 189],
+        [1, 87, 155],
+    ]
+
+
+    # "r, g, b"
+    colours = [
+        "225, 245, 254",
+        "179, 229, 252",
+        "129, 212, 250",
+        "79, 195, 247",
+        "41, 182, 246",
+        "3, 169, 244",
+        "3, 155, 229",
+        "2, 136, 209",
+        "2, 119, 189",
+        "1, 87, 155",
+    ]
+
+    "r g b"
+    colours = [
+        "225 245 254",
+        "179 229 252",
+        "129 212 250",
+        "79 195 247",
+        "41 182 246",
+        "3 169 244",
+        "3 155 229",
+        "2 136 209",
+        "2 119 189",
+        "1 87 155",
+    ]
+
+
+in all cases the output of this is
+
+    var colour_range = [
+         /* 0 =  0 ..   9 % */
+         [225, 245, 254]
+
+         /* 1 = 10 ..  19 % */
+         [179, 229, 252]
+
+         /* 2 = 20 ..  29 % */
+         [129, 212, 250]
+
+         /* 3 = 30 ..  39 % */
+         [79, 195, 247]
+
+         /* 4 = 40 ..  49 % */
+         [41, 182, 246]
+
+         /* 5 = 50 ..  59 % */
+         [3, 169, 244]
+
+         /* 6 = 60 ..  69 % */
+         [3, 155, 229]
+
+         /* 7 = 70 ..  79 % */
+         [2, 136, 209]
+
+         /* 8 = 80 ..  89 % */
+         [2, 119, 189]
+
+         /* 9 = 90 .. 100 % */
+         [1, 87, 155]
+
+    ];
+
+which is suitable for placing into `site/graph.js`
+
+you can run this via `make palette`
+
 
 colour chart
 ------------
