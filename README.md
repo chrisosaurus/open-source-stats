@@ -10,7 +10,7 @@ demo
 
 `make view` will open a browser with the current demo
 
-![demo commit graph](https://raw.githubusercontent.com/mkfifo/open-source-stats/master/resources/oos-demo.png )
+![demo commit graph](resources/oos-demo.png )
 
 
 full demo
@@ -104,7 +104,7 @@ colour chart
 
 if you change the above colouring values and then run `make generate` your browser of choice should open to a page showing this graph
 
-![colour chart](https://raw.githubusercontent.com/mkfifo/open-source-stats/master/resources/colour_chart.png )
+![colour chart](resources/colour_chart.png )
 
 These colours are currently based on the 'light blue' palette from http://www.google.com/design/spec/style/color.html#color-color-palette
 
