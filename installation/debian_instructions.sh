@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # run me as sudo
-set -c
+set -e
 
 apt-get update
 apt-get install git build-essential python3 sqlite3 python3-pip

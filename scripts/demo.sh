@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 ./scripts/create.sh
 
 ./src/update_projects.py

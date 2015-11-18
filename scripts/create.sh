@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 DB=oos.sqlite
 FILE=schema.sql
 
