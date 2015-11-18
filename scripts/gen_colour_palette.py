@@ -181,13 +181,13 @@ if __name__ == "__main__":
                 print("Error: hex list must have 3 elems")
                 exit(1)
         elif mode == 'rgb':
-            if type(c) == type([]):
+            if type(c) == list:
                 if len(c) != 3:
                     print("Error: rgb list must have 3 elems")
                     exit(1)
                 # this is good!
                 pass
-            elif type(c) == type(""):
+            elif type(c) == str:
                 # must convert to []
                 c = rgb_str_to_list(c)
             else:
