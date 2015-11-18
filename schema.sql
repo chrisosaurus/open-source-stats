@@ -59,4 +59,5 @@ create table project_user_stats (
 
 insert into project (repo_url) values ("https://github.com/CausalityLtd/ponyc.git");
 insert into project (repo_url) values ("https://github.com/rust-lang/rust.git");
+insert into project (repo_url) values ("https://github.com/golang/go.git");
 
