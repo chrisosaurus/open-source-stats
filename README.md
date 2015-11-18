@@ -54,6 +54,10 @@ to see a running demo you can invoke `./scripts/demo.sh`
 this will create a new db with a fresh schema, clone/update the testing project (here we use ponyc)
 it then generates the statistics, prints them out, and then opens the testing site in a browser showing those generated stats.
 
+which shows the following graph:
+
+[ponyc commit graph 2015-11-18](https://raw.githubusercontent.com/mkfifo/open-source-stats/master/resources/ponyc_commit_graph_2015-11-18.png)
+
 deps
 ----
 

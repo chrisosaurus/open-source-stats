@@ -1,7 +1,6 @@
 var dataset_from = "2014-11";
 var dataset_to = "2015-11";
 var dataset = [
-    70,
     197,
     178,
     148,
@@ -12,5 +11,6 @@ var dataset = [
     60,
     29,
     92,
-    91
+    91,
+    73
 ];
