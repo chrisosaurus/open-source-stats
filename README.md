@@ -8,9 +8,9 @@ This is an early work in progress.
 demo
 ----
 
-to see a running demo you can invoke `./scripts/demo.sh`
+to see a running demo you can invoke `make demo`
 
-    [chris@heimdall open-source-stats]$ ./scripts/demo.sh 
+    [chris@heimdall open-source-stats]$ make demo
     db 'oos.sqlite' already exists, deleting
     creating database 'oos.sqlite'
     success
@@ -57,6 +57,8 @@ it then generates the statistics, prints them out, and then opens the testing si
 which shows the following graph:
 
 ![ponyc commit graph 2015-11-18](https://raw.githubusercontent.com/mkfifo/open-source-stats/master/resources/ponyc_commit_graph_2015-11-18.png)
+
+you can also just view the above graph from running `make view`
 
 deps
 ----
