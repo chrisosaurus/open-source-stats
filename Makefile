@@ -19,5 +19,9 @@ view:
 demo:
 	./scripts/demo.sh
 
-.PHONY: all create open view demo
+generate:
+	./src/generate_data.py
+	./scripts/view.sh
+
+.PHONY: all create open view demo generate
 

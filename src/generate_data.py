@@ -14,8 +14,7 @@ output_path = "site/data.js"
 colour_chart = {
                 "from": "2014-12",
                 "to": "2015-11",
-                # we have two 99s, one for 100 % and one for 'final value'
-                "contents": [9, 19, 29, 39, 49, 59, 69, 79, 89, 99, 99],
+                "contents": [9, 19, 29, 39, 49, 59, 69, 79, 89, 99, 25],
                }
 
 
