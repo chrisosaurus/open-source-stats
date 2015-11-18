@@ -83,7 +83,7 @@ for (index in datasets){
         .attr("width", width + xpadding)
         .attr("height", height + ypadding);
 
-    // add a label
+    // add a title
     svg.append("text")
         .attr("x", (width / 2))
         .attr("y", title_height)
@@ -111,11 +111,26 @@ for (index in datasets){
         })
         .attr("transform", "translate(0, " + (ypadding/4) + ")")
 
+    // yaxis
     svg.append("g")
         .attr("class", "xaxis")
         .attr("transform", "translate(" + width + ", " + (title_padding + ypadding/4) + ")")
         .call(yaxis);
 
+    // yaxis label
+    /*
+    svg.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        //.attr("y", height/2)
+        //.attr("x", width)
+        .attr("dy", ".75em")
+        //.attr("transform", "rotate(-90)")
+        .attr("transform", "translate(" + width + ", " + (title_padding + ypadding) + ") rotate(-90)")
+        .text("commits");
+    */
+
+    // xaxis
     svg.append("g")
         .attr("class", "axis")
         /* translate by
@@ -124,6 +139,16 @@ for (index in datasets){
          */
         .attr("transform", "translate(" + (-width/(data.length * 2)) + ", " + (height + title_padding + ypadding/4) + ")")
         .call(xaxis);
+
+    // xaxis label
+    /*
+    svg.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", width/2)
+        .attr("y", height + 60)
+        .text("months");
+    */
 
 }
 
