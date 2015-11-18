@@ -8,9 +8,6 @@ dbname = "oos.sqlite"
 # period of 12 months
 period = 12
 
-# harcoded project id2
-project_ids = [1]
-
 output_path = "site/data.js"
 
 def prev_month(monstr):
@@ -27,7 +24,7 @@ def prev_month(monstr):
     newmonstr = "%.4d-%.2d" %(year, month)
     return newmonstr
 
-def generate_data(dbname, project_ids, period):
+def generate_data(conn, project_ids, period):
     # create an array <period> in length
     # initially populated with all 0s
     data = {}
@@ -36,28 +33,27 @@ def generate_data(dbname, project_ids, period):
     year = now.year
     month = now.month
 
-    with sqlite3.connect(dbname) as conn:
-        for project_id in project_ids:
-            # get project name
-            row = conn.execute('''select name from project where id = ?''', (project_id,))
-            row = row.fetchone()
+    for project_id in project_ids:
+        # get project name
+        row = conn.execute('''select name from project where id = ?''', (project_id,))
+        row = row.fetchone()
 
-            if row is None:
-                print("Error: failed to find project with id '%d'" %(project_id))
-                return []
+        if row is None:
+            print("Error: failed to find project with id '%d'" %(project_id))
+            return []
 
-            project_name = row[0]
+        project_name = row[0]
 
-            project_data = []
-            for i in range(period):
-                project_data.append(0)
+        project_data = []
+        for i in range(period):
+            project_data.append(0)
 
-            months = {}
+        months = {}
 
-            for row in conn.execute('''select month, commits_in_period from project_stats where project_id = ? order by month desc limit ?''', (project_id, period)):
-                monstr = row[0]
-                commits_in_period = row[1]
-                months[monstr] = commits_in_period
+        for row in conn.execute('''select month, commits_in_period from project_stats where project_id = ? order by month desc limit ?''', (project_id, period)):
+            monstr = row[0]
+            commits_in_period = row[1]
+            months[monstr] = commits_in_period
 
         monstr = "%.4d-%.2d" %(year, month)
         initial_date = monstr
@@ -106,8 +102,21 @@ def output_data(data, output_path):
     with open(output_path, 'w') as file:
         file.writelines(output)
 
-if __name__ == "__main__":
+def get_project_ids(conn):
+    project_ids = []
+    for row in conn.execute('''select id from project'''):
+        pid = row[0]
+        project_ids.append(pid)
 
-    data = generate_data(dbname, project_ids, period)
-    output_data(data, output_path)
+    return project_ids
+
+if __name__ == "__main__":
+    data = None
+    with sqlite3.connect(dbname) as conn:
+        project_ids = get_project_ids(conn)
+        data = generate_data(conn, project_ids, period)
+    if data is None:
+        print("Error: failed to generate data")
+    else:
+        output_data(data, output_path)
 
