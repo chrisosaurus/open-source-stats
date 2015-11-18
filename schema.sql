@@ -10,6 +10,7 @@ create table project (
     id              integer primary key autoincrement not null ,
     repo_url        text                              not null ,
     name            text                                       ,
+    checkout        text                                       ,
     branch          text                                       default "master",
     -- time this project was added
     added           datetime                          not null default CURRENT_TIMESTAMP,

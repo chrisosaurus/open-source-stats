@@ -30,8 +30,8 @@ def prev_month(monstr):
     return newmonstr
 
 # update a project's git checkout
-def update_project(conn, project_id, repo_url, name, branch, last_updated, last_hash):
-    path = os.path.join(repo_dir, name)
+def update_project(conn, project_id, repo_url, name, checkout, branch, last_updated, last_hash):
+    path = os.path.join(repo_dir, checkout)
     repo = None
 
     if os.path.exists(path):
@@ -43,7 +43,7 @@ def update_project(conn, project_id, repo_url, name, branch, last_updated, last_
         repo.remotes["origin"].fetch()
 
     else:
-        print("cloning to '%s'" %(path))
+        print("cloning to '%s'" %(checkout))
         # if project doesn't exist, then we clone it
         #clone_cmd = "git clone --no-checkout --bare %s %s" %(repo_url, path)
         #subprocess.call(clone_cmd, shell=True)
@@ -210,7 +210,7 @@ def record_project_user_stats(conn, project_id, stats):
         row = conn.execute('''select email from user where id=?''', (user_id,))
         row = row.fetchone()
         if row is None:
-            raise Exception("Error: gen_project_stats failed to find user from id '%s'" %(user_id))
+            raise Exception("Error: record_project_user_stats failed to find user from id '%s'" %(user_id))
 
         email = row[0]
 
@@ -230,7 +230,7 @@ def record_project_user_stats(conn, project_id, stats):
             row = row.fetchone()
 
         if row is None:
-            raise Exception("Error: gen_project_stats failed to create new user for email '%s'" %(author_email))
+            raise Exception("Error: record_project_user_stats failed to create new user for email '%s'" %(author_email))
 
         commits_in_period = commits_in_period_per_user[author_email]
         total_commits = 0
@@ -245,8 +245,8 @@ def record_project_user_stats(conn, project_id, stats):
                                                        (project_id, user_id,                    hash,  parent_hash,   total_commits, commits_in_period))
 
 # generate statistics for a project
-def gen_project_stats(conn, project_id, repo_url, name, branch, last_updated, last_hash):
-    path = os.path.join(repo_dir, name)
+def gen_project_stats(conn, project_id, repo_url, name, checkout, branch, last_updated, last_hash):
+    path = os.path.join(repo_dir, checkout)
     repo = None
 
     if os.path.exists(path):
@@ -271,6 +271,7 @@ def update_projects(dnbame):
                                         id,
                                         repo_url,
                                         name,
+                                        checkout,
                                         branch,
                                         last_updated,
                                         last_hash
@@ -279,28 +280,39 @@ def update_projects(dnbame):
             project_id     = row[0]
             repo_url       = row[1]
             name           = row[2]
-            branch         = row[3]
-            last_updated   = row[4]
-            last_hash      = row[5]
+            checkout       = row[3]
+            branch         = row[4]
+            last_updated   = row[5]
+            last_hash      = row[6]
 
+            # if
             if branch is None:
                 branch = "master"
                 # save this branch to db
                 conn.execute("UPDATE project set branch=? where id=?", (branch, project_id))
 
-            # we also use `name` as the path
-            # if name is not set then we set it here
+            # if name is not set, then generate
             if name is None:
                 name = repo_url
-                name = name.replace("http://", "")
-                name = name.replace("https://", "")
-                name = name.replace("/", "_")
+                name = name.split("/")
+                name = name[-1]
+                name = name.replace(".git", "")
                 # save this name to db
                 conn.execute("UPDATE project set name=? where id=?", (name, project_id))
                 print("name is '%s'" %(name))
 
-            update_project(conn=conn, project_id=project_id, repo_url=repo_url, name=name, branch=branch, last_updated=last_updated, last_hash=last_hash)
-            gen_project_stats(conn=conn, project_id=project_id, repo_url=repo_url, name=name, branch=branch, last_updated=last_updated, last_hash=last_hash)
+            # if checkout is not set, then generate
+            if checkout is None:
+                checkout = repo_url
+                checkout = checkout.replace("http://", "")
+                checkout = checkout.replace("https://", "")
+                checkout = checkout.replace("/", "_")
+                # save this name to db
+                conn.execute("UPDATE project set checkout=? where id=?", (checkout, project_id))
+                print("checkout is '%s'" %(checkout))
+
+            update_project(conn=conn, project_id=project_id, repo_url=repo_url, name=name, checkout=checkout, branch=branch, last_updated=last_updated, last_hash=last_hash)
+            gen_project_stats(conn=conn, project_id=project_id, repo_url=repo_url, name=name, checkout=checkout, branch=branch, last_updated=last_updated, last_hash=last_hash)
 
 
 if __name__ == "__main__":
