@@ -16,32 +16,30 @@
  */
 
 var colour_range = [    /* 0 =  0 ..   9 % */
-    [225,245,254,],
+    [ 225, 245, 254,],
     /* 1 = 10 ..  19 % */
-    [179,229,252,],
+    [ 179, 229, 252,],
     /* 2 = 20 ..  29 % */
-    [129,212,250,],
+    [ 129, 212, 250,],
     /* 3 = 30 ..  39 % */
-    [ 79,195,247,],
+    [  79, 195, 247,],
     /* 4 = 40 ..  49 % */
-    [ 41,182,246,],
+    [  41, 182, 246,],
     /* 5 = 50 ..  59 % */
-    [  3,169,244,],
+    [   3, 169, 244,],
     /* 6 = 60 ..  69 % */
-    [  3,155,229,],
+    [   3, 155, 229,],
     /* 7 = 70 ..  79 % */
-    [  2,136,209,],
+    [   2, 136, 209,],
     /* 8 = 80 ..  89 % */
-    [  2,119,189,],
+    [   2, 119, 189,],
     /* 9 = 90 .. 100 % */
-    [  1, 87,155,],
+    [   1,  87, 155,],
 ];
 
-
-// default colour should never actually be used
-var colour_default = [0, 0, 0];
 // ongoing colour is for the current month, to show that the number is not yet final
-var colour_ongoing = [138, 43, 226];
+var colour_ongoing = [ 124,   1, 159,];
+
 
 function get_colour(percent){
     var index = Math.floor(colour_range.length * percent);
@@ -52,7 +50,8 @@ function get_colour(percent){
         return colour_range[index];
     }
 
-    return colour_default;
+    console.log("Error: failed to find colour")
+    return [0,0,0];
 }
 
 

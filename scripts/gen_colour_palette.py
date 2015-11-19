@@ -8,6 +8,9 @@ import os
 #       google-light-blue.hex
 #       old-blue.rgb
 #
+# each palette must contain 10 colours for the graduations between 0 and 100 %
+# and an 11th colour for the 'incomplete' (current) month
+#
 # a hex file must be made up with one rgb hex file per line, like so:
 #
 #    chris@Ox1b open-source-stats(master)-> cat palettes/google-light-blue.hex
@@ -21,6 +24,7 @@ import os
 #    0288D1
 #    0277BD
 #    01579B
+#    7C019F
 #
 # a rgb file takes 3 values per line (r, g and then b)
 # these values must be whitespace or comma separated
@@ -37,6 +41,7 @@ import os
 #      25 118 210
 #      21 101 192
 #      13  71 161
+#     124   1 159
 #
 
 def hex_to_rgb_list(hex):
@@ -44,9 +49,9 @@ def hex_to_rgb_list(hex):
     g = hex[2:4]
     b = hex[4:6]
     return [
-        "%3d" %(int(r,16)),
-        "%3d" %(int(g,16)),
-        "%3d" %(int(b,16))
+        "%4d" %(int(r,16)),
+        "%4d" %(int(g,16)),
+        "%4d" %(int(b,16))
     ]
 
 def rgb_str_to_list(rgbstr):
@@ -73,8 +78,8 @@ def parse_palette(path):
     with open(path, "r") as f:
         lines = f.readlines()
 
-    if len(lines) != 10:
-        print("Error: palette did not specify exactly 10 colours")
+    if len(lines) != 11:
+        print("Error: palette did not specify exactly 11 colours")
         exit(1)
 
     colours = []
@@ -94,8 +99,8 @@ def parse_palette(path):
             exit(1)
         colours.append(colour)
 
-    if len(colours) != 10:
-        print("Error: failed to parse 10 colour lines")
+    if len(colours) != 11:
+        print("Error: failed to parse 11 colour lines")
         exit(1)
 
     return colours
@@ -165,14 +170,10 @@ comments = [
     "/* 7 = 70 ..  79 % */",
     "/* 8 = 80 ..  89 % */",
     "/* 9 = 90 .. 100 % */",
+    "// ongoing colour is for the current month, to show that the number is not yet final",
 ]
 
 footer = '''
-
-// default colour should never actually be used
-var colour_default = [0, 0, 0];
-// ongoing colour is for the current month, to show that the number is not yet final
-var colour_ongoing = [138, 43, 226];
 
 function get_colour(percent){
     var index = Math.floor(colour_range.length * percent);
@@ -183,15 +184,18 @@ function get_colour(percent){
         return colour_range[index];
     }
 
-    return colour_default;
+    console.log("Error: failed to find colour")
+    return [0,0,0];
 }
 
 '''
 
-def pretty_print(f, output):
-    if len(output) != 10:
+def pretty_print(f, colours):
+    if len(colours) != 11:
         print("Error: pretty_print output must be 10 elems")
         exit(1)
+
+    incomplete_colour = colours[10]
 
     lines = []
 
@@ -208,12 +212,21 @@ def pretty_print(f, output):
         lines.append("\n")
         lines.append("    ")
         lines.append("[")
-        for o in output[i]:
+        for o in colours[i]:
             o += ","
             lines.append(o)
         lines.append("],\n")
 
     # print close
+    lines.append("];\n")
+
+    lines.append("\n")
+    lines.append(comments[10])
+    lines.append("\n")
+    lines.append('''var colour_ongoing = [''')
+    for o in colours[10]:
+        o += ","
+        lines.append(o)
     lines.append("];\n")
 
     # print footer
@@ -243,7 +256,7 @@ if __name__ == "__main__":
 
     colours = parse_palette(palette)
 
-    if len(colours) != 10:
+    if len(colours) != 11:
         print("Error: colour list must have 10 elems")
         exit(1)
 

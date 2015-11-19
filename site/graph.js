@@ -121,7 +121,7 @@ for (index in datasets){
             // we want to colour based on it being a percentage of the max
             // we also want to colour the final bar to indicate it being in progress
 
-            var colour = colour_default;
+            var colour = [0,0,0];
 
             if( i == data_len ){
                 // if this is the final item, then use ongoing colour
