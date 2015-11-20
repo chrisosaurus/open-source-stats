@@ -1,0 +1,11 @@
+static front end
+
+python3 generating stats
+
+d3.js on front-end requesting stats
+
+python3 generating static html pages with appropriate js and data included in them
+
+so server side is 100% static (initially), once we have an api
+we need a little bit of dynamic code
+
