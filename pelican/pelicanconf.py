@@ -64,8 +64,8 @@ DEFAULT_PAGINATION = False
 RELATIVE_URLS = False
 
 TEMPLATE_PAGES = {
-        'projects.html': 'projects.html',
-        'users.html': 'users.html',
+        'project_list.html': 'projects.html',
+        'user_list.html': 'users.html',
 }
 
 
