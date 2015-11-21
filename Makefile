@@ -26,5 +26,13 @@ generate:
 default-palette:
 	./scripts/gen_colour_palette.py palettes/google-light-blue.hex > site/colours.js
 
-.PHONY: all create open view demo generate default-palette
+pelican:
+	@$(MAKE) -C pelican html
+
+	@echo -e "\nServing the test site at localhost:8000"
+	@echo -e "Press ctrl-c when you are finished\n"
+
+	@$(MAKE) -C pelican serve
+
+.PHONY: all create open view demo generate default-palette pelican
 
