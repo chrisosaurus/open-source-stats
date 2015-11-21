@@ -2,6 +2,10 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
+THEME = "oss-theme"
+
+#GITHUB_URL = "https://github.com/mkfifo/open-source-stats"
+
 LOAD_CONTENT_CACHE = False
 DELETE_OUTPUT_DIRECTORY = True
 
