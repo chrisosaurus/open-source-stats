@@ -63,3 +63,9 @@ DEFAULT_PAGINATION = False
 # Uncomment following line if you want document-relative URLs when developing
 RELATIVE_URLS = False
 
+TEMPLATE_PAGES = {
+        'projects.html': 'projects.html',
+        'users.html': 'users.html',
+}
+
+
