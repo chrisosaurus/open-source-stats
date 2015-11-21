@@ -1,3 +1,5 @@
 *.sqlite
 repos
+pelican/output
+pelican/__pycache__
 
